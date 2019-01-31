@@ -1,0 +1,18 @@
+﻿ @{ Layout = "_Layout";}
+<div class="columns is-8 is-ancestor">
+    <div class="column is-one-quarter">
+        <div class="tile sidebar box">
+            <article class="tile is-child is-primary">
+                @RenderSection("Sidebar")
+            </article>
+        </div>
+    </div>
+    <div class="column">
+        <div class="tile sidebar box">
+            <article class="tile is-child is-primary">
+                @RenderBody()
+            </article>
+        </div>
+    </div>
+
+</div>
