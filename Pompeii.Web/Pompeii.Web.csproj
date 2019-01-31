@@ -14,6 +14,7 @@
       <Folder Include="Models\Domain\" />
       <Folder Include="Models\Data\" />
       <Folder Include="Pages" />
+      <Folder Include="wwwroot\fa" />
       <Folder Include="wwwroot\lib" />
     </ItemGroup>
   <ItemGroup>

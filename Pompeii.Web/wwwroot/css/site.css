@@ -55,4 +55,8 @@ div.sidebar-app-name {
     padding:0 !important;
     color:gray;
     font-size: 0.75em
+} 
+
+a {
+    color:#835fe4 !important;
 }
