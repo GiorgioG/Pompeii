@@ -41,6 +41,7 @@ namespace Pompeii.Web.Controllers
         }
 
         [HttpPost]
+        [Route("Team")]
         public IActionResult Post(EditTeamViewModel model)
         {
             return View("Index");

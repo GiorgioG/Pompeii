@@ -8,7 +8,7 @@
 
 <div class="box">
 
-    <form id="app" asp-controller="Team" asp-action="POST" v-on:submit="checkForm">
+    <form id="app" asp-controller="Team" asp-action="Post" v-on:submit="checkForm">
 
 
         <div class="field">
@@ -17,25 +17,32 @@
                 <input class="input" v-model="name" name="name" id="name" type="text" placeholder="Choose a unique name." required maxlength="32">
             </div>
         </div>
-        <div v-if="errors.length>0">
-            <div class="notification is-danger site-notification" v-for="error in errors">{{ error }}</div>
-        </div>
-
-        <div class="field is-grouped" style="margin-top:10px">
-            <p class="control">
-                <button class="button is-primary">
-                    Submit
-                </button>
-            </p>
-            <p class="control">
-                <button class="button is-light">
-                    Cancel
-                </button>
-            </p>
-        </div>
+        <transition name="fade">
+            <div v-if="errors.length>0">
+                <div class="notification is-danger site-notification" v-for="error in errors">{{ error }}</div>
+            </div>
+        </transition>
+            <div class="field is-grouped" style="margin-top:10px">
+                <p class="control">
+                    <button class="button is-primary" type="submit">
+                        Submit
+                    </button>
+                </p>
+                <p class="control">
+                    <button type="button" class="button is-light" formnovalidate  v-confirm="{
+            loader: false,
+            ok: okCallback,
+            okText: 'Leave this page',
+            cancelText: 'Stay on this page',                
+            message: 'Leave this page without saving?'}">
+                        Cancel
+                    </button>
+                </p>
+            </div>
     </form>
 </div>
 <script language="javascript">
+    window.Vue.use(VuejsDialog.main.default)
 
     let apiUrl = 'CheckName?name=';
     
@@ -46,6 +53,9 @@
             name: ''
         },
         methods: {
+            okCallback: function () {
+                window.location = '@Url.Action("Index", "Team")';
+            },
             checkForm: function (e) {
                 e.preventDefault();
                 this.errors = [];
@@ -56,6 +66,7 @@
                             this.errors.push(res.error);
                         } else {
                             this.errors = []
+                            document.forms[0].submit();
                         }
                     });
             }
