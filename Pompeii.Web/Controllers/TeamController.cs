@@ -30,7 +30,7 @@ namespace Pompeii.Web.Controllers
         [HttpGet]
         public IActionResult CheckName([FromQuery] string name)
         {
-            return Json(new { OK=true });
+            return Json(new { error=name=="bob"? null: "Invalid Team Name" });
         }
 
 

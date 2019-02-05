@@ -1,4 +1,4 @@
-﻿html {
+html {
     background-color: #F7F8FE;
 }
 html, body {
@@ -59,4 +59,10 @@ div.sidebar-app-name {
 
 a {
     color:#835fe4 !important;
+}
+
+.site-notification {
+    padding: 0.65em !important;
+    border-radius: 4px !important;
+
 }

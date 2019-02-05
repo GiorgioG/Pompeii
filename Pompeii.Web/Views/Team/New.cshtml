@@ -7,14 +7,21 @@
 <h1 class="has-text-white title">New Team</h1>
 
 <div class="box">
+
     <form id="app" asp-controller="Team" asp-action="POST" v-on:submit="checkForm">
+
+
         <div class="field">
             <label class="label">Team Name</label>
             <div class="control">
-                <input class="input" name="name" id="name" type="text" placeholder="Choose a unique name." required maxlength="32">
+                <input class="input" v-model="name" name="name" id="name" type="text" placeholder="Choose a unique name." required maxlength="32">
             </div>
         </div>
-        <div class="field is-grouped">
+        <div v-if="errors.length>0">
+            <div class="notification is-danger site-notification" v-for="error in errors">{{ error }}</div>
+        </div>
+
+        <div class="field is-grouped" style="margin-top:10px">
             <p class="control">
                 <button class="button is-primary">
                     Submit
@@ -31,16 +38,12 @@
 <script language="javascript">
 
     let apiUrl = 'CheckName?name=';
-
+    
     const app = new Vue({
         el: '#app',
         data: {
             errors: [],
             name: ''
-        },
-        created: function () {
-            // `this` points to the vm instance
-            console.log('Im up')
         },
         methods: {
             checkForm: function (e) {
@@ -52,8 +55,7 @@
                         if (res.error) {
                             this.errors.push(res.error);
                         } else {
-                            // redirect to a new URL, or do something on success
-                            alert('ok!');
+                            this.errors = []
                         }
                     });
             }
