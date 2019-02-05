@@ -20,13 +20,28 @@ namespace Pompeii.Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult Get()
+        {
+            return View();
+        }
+
+
+        [Route("Team/CheckName")]
+        [HttpGet]
+        public IActionResult CheckName([FromQuery] string name)
+        {
+            return Json(new { OK=true });
+        }
+
+
+        [HttpGet]
         public IActionResult New()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult NewPost()
+        public IActionResult Post(EditTeamViewModel model)
         {
             return View("Index");
         }

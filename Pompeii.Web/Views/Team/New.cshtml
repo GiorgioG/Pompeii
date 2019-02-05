@@ -4,5 +4,58 @@
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
+<h1 class="has-text-white title">New Team</h1>
 
-<h2>title</h2>
+<div class="box">
+    <form id="app" asp-controller="Team" asp-action="POST" v-on:submit="checkForm">
+        <div class="field">
+            <label class="label">Team Name</label>
+            <div class="control">
+                <input class="input" name="name" id="name" type="text" placeholder="Choose a unique name." required maxlength="32">
+            </div>
+        </div>
+        <div class="field is-grouped">
+            <p class="control">
+                <button class="button is-primary">
+                    Submit
+                </button>
+            </p>
+            <p class="control">
+                <button class="button is-light">
+                    Cancel
+                </button>
+            </p>
+        </div>
+    </form>
+</div>
+<script language="javascript">
+
+    let apiUrl = 'CheckName?name=';
+
+    const app = new Vue({
+        el: '#app',
+        data: {
+            errors: [],
+            name: ''
+        },
+        created: function () {
+            // `this` points to the vm instance
+            console.log('Im up')
+        },
+        methods: {
+            checkForm: function (e) {
+                e.preventDefault();
+                this.errors = [];
+                fetch(apiUrl + encodeURIComponent(this.name))
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.error) {
+                            this.errors.push(res.error);
+                        } else {
+                            // redirect to a new URL, or do something on success
+                            alert('ok!');
+                        }
+                    });
+            }
+        }
+    })</script>
