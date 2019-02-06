@@ -16,6 +16,10 @@
         </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0-preview.19074.2" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.0.0-preview1" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="2.0.0-preview1" />
+        <PackageReference Include="Nubizsoft.AspNetCore.Authentication.AzureADB2C" Version="1.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureADB2C.UI" Version="3.0.0-preview-19075-0444" />
     </ItemGroup>
 
     <ItemGroup>
@@ -63,7 +67,6 @@
     <None Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
-    <None Include="Views\Shared\_CookieConsentPartial.cshtml" />
     <None Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   

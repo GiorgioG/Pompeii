@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,37 +11,17 @@ namespace Pompeii.Web.Models.Data
     {
         public Guid Id { get; set; }
         public Guid? TenantId {get;set;}
-
         public bool Deleted {get;set;}
         public DateTimeOffset DateCreated {get;set;}
 
     }
 
-    public class Team : Entity
+    public class Project : Entity
     {
         public string Name { get; set; }
         public string TimeZoneInfoId {get;set;}
-    }
-
-
-
-    public class StandupTemplate : Entity
-    {
-        public Guid TeamId { get; set; }
-        public string Name { get;set; }
-        public List<StandupTemplateDay> Days {get;set;} = new List<StandupTemplateDay>();
-    }
-
-    public class StandupTeamMemberResponse : Entity
-    {
-        public DateTimeOffset SubmittedOn {get;set;}
-        public DateTimeOffset TargetStandupDate {get;set;}
-        public StandupTemplate StandupTemplate { get; set; }
-        public Guid StandupTemplateId {get;set;}
-        public TeamMember TeamMember {get;set;}
-        public Guid TeamMemberId {get;set;}
-        public ResponseType Type {get;set;}
-        public string Response {get;set;}
+        public StandupConfiguration StandupConfiguration { get; set; } = new StandupConfiguration();
+        public List<ProjectMember> Members { get; set; } = new List<ProjectMember>();
     }
 
     public enum ResponseType
@@ -51,35 +31,58 @@ namespace Pompeii.Web.Models.Data
         Audio
     }
 
-    public class StandupTemplateDay : Entity
+    public class StandupConfiguration : Entity
     {
-        public Guid StandupTemplateId { get; set; }
-        public StandupTemplate StandupTemplate {get;set;}
-        public DayOfWeek DayOfTheWeek {get;set;}
+        public Guid ProjectId { get; set; }
+        public Project Project { get; set; }
+        public DayOfWeek[] DaysOfTheWeek {get;set;}
         public int NotificationHour {get;set;}
         public int NotificationMinute {get;set;}
     }
 
+    public class StandupQuestion : Entity
+    {
+        public Guid ProjectId { get; set; }
+        public Project Project { get; set; }
+        public string QuestionText { get; set; }
+        public bool ResponseRequired { get; set; } 
+    }
+
+
+    public class StandupQuestionResponse : Entity
+    {
+        public DateTimeOffset SubmittedOn { get; set; }
+        public DateTimeOffset TargetStandupDate { get; set; }
+        public Guid QuestionId { get; set; }
+        public StandupQuestion Question { get; set; }
+        public ProjectMember ProjectMember { get; set; }
+        public Guid ProjectMemberId { get; set; }
+        public ResponseType Type { get; set; }
+        public string Response { get; set; }
+    }
+ 
     public class User : Entity 
     {
         public string ExternalId {get;set;}
         public string DisplayName {get;set;}
     }
 
-    public class TeamMember : Entity
+    public class ProjectMember : Entity
     {
-        public Guid TeamId {get;set;}
-        public Team Team {get;set;}
+        public Guid ProjectId {get;set;}
+        public Project Project {get;set;}
         public Guid UserId {get;set;}
         public User User {get;set;}
+        public string Role { get; set; }
     }
      
     public class MainDataContext : DbContext 
     {
-        public DbSet<Team> Teams {get;set;}
-        public DbSet<TeamMember> TeamMembers {get;set;}
         public DbSet<User> Users {get;set;}
-        public DbSet<StandupTemplate> StandupTemplates {get;set;}
-        public DbSet<StandupTemplateDay> StandupTemplateDays {get;set;}
+        public DbSet<Project> Projects {get;set;}
+        public DbSet<ProjectMember> ProjectMembers {get;set;}
+        public DbSet<StandupConfiguration> StandupConfigurations { get; set; }
+        public DbSet<StandupQuestion> StandupQuestions { get; set; }
+        public DbSet<StandupQuestionResponse> StandupQuestionResponses { get; set; }
     }
 }
