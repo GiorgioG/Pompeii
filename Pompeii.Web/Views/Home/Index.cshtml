@@ -3,15 +3,11 @@
     ViewData["Title"] = "Home Page";
     Layout = "_TwoColumns";
 }
+
 @section Sidebar {
-    <partial for="@Model.Teams" name="_Partial/TeamList"/>
+    <partial for="@Model.Projects" name="_Partial/ProjectList"/>
 }
  
 <div class="text-center">
-    <h1 class="display-4">Welcome @Model.Name</h1>
-</div>
-
-<i class="fas fa-tram"></i> <!-- uses solid style -->
-<i class="fas fa-user"></i> <!-- uses solid style -->
-<i class="fal fa-user"></i> <!-- uses solid style -->
-
+    <h1 class="display-4">Welcome!</h1>
+</div> 

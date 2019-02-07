@@ -1,0 +1,12 @@
+﻿@model IEnumerable<ProjectSimpleViewModel>
+
+<div class="is-ancestor">
+    <div class="is-hidden-desktop">&nbsp;</div>
+    <a class="" asp-area="" asp-controller="Project" asp-action="New">
+        <div class="tile is-vertical list-item notification is-alternate has-text-centered">Create a Project</div></a>
+    @foreach (var project in Model)
+    {
+        <a href="#">
+            <div class="tile is-vertical list-item"><span>@project.Name</span></div></a>
+    }
+</div>

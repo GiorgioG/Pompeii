@@ -1,4 +1,8 @@
 ﻿@using System
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Authentication.AzureADB2C.UI
+@inject IOptionsMonitor<AzureADB2COptions> AzureADB2COptions
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,32 +25,82 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body class="gradient">
-<header>
-    <div class="navbar is-transparent">
-    <div class="navbar-brand">
-        <a class="navbar-item" href="~/">
-            <img src="~/img/logo@0,1x.png" width="30" />
-        </a>
-        <a class="navbar-item has-text-white" style="margin-left: -10px;">
-            Vonnie
-        </a>
-    </div>
-    </div>
-</header>
-<div class="container">
-    <main role="main" class="main">
-        @RenderBody()
-    </main>
-</div>
+    <header>
+        <div class="navbar is-transparent">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="~/">
+                    <img src="~/img/logo@0,1x.png" width="30" />
+                </a>
+                <a class="navbar-item has-text-white" style="margin-left: -10px;">
+                    Vonnie
+                </a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
 
-<footer class="border-top footer text-muted">
+                    </div>
+                    <ul>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var options = AzureADB2COptions.Get(AzureADB2CDefaults.AuthenticationScheme);
+
+                            if (!string.IsNullOrEmpty(options.EditProfilePolicyId))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="AzureADB2C" asp-controller="Account" asp-action="EditProfile">
+                                        <span class="nav-text text-dark">Hello @User.Identity.Name!</span>
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <span class="nav-text text-dark">Hello @User.Identity.Name!</span>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="AzureADB2C" asp-controller="Account" asp-action="SignOut">Sign out</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="button is-primary">
+                                    <strong>Sign up</strong>
+                                </a>
+                                <a class="button is-light">
+                                    Log in
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </header>
     <div class="container">
-        &copy; @DateTime.Today.Year - Nomad Enterprises LLC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <main role="main" class="main">
+            @if (User.Identity.IsAuthenticated)
+            {
+                @RenderBody();
+            }
+            else
+            {
+                IgnoreBody();
+            }
+        </main>
     </div>
-</footer>
 
-<script src="~/js/site.js" asp-append-version="true"></script>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; @DateTime.Today.Year - Nomad Enterprises LLC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
 
-@RenderSection("Scripts", required: false)
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

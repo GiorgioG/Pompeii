@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pompeii.Web.Models;
 using Pompeii.Web.Models.View;
@@ -16,11 +17,11 @@ namespace Pompeii.Web.Controllers
         public IActionResult Index()
         {
             var vm = new HomeViewModel();
-            vm.Teams = new List<TeamViewModel>()
+            vm.Projects = new List<ProjectSimpleViewModel>()
             {
-                new TeamViewModel() {Id = Guid.NewGuid(), Name = "Team 1"},
-                new TeamViewModel() {Id = Guid.NewGuid(), Name = "Team 2"},
-                new TeamViewModel() {Id = Guid.NewGuid(), Name = "Team 3"}
+                new ProjectSimpleViewModel() {Id = Guid.NewGuid(), Name = "Project 1"},
+                new ProjectSimpleViewModel() {Id = Guid.NewGuid(), Name = "Project 2"},
+                new ProjectSimpleViewModel() {Id = Guid.NewGuid(), Name = "Project 3"}
             };
             return View(vm);
         }

@@ -2,9 +2,10 @@
 
 namespace Pompeii.Web.Models.View
 {
-    public class TeamViewModel
+    public class ProjectSimpleViewModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+
     }
 }
